@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ROUTES } from './routePaths';
 
 import { NotFoundPage } from '../layout/NotFound';
@@ -38,6 +38,7 @@ export const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         {/* /auth — solo accesible si NO estás autenticado */}
+        <Route path="/" element={<Navigate to={ROUTES.auth} replace />} />
         <Route element={<PublicRoute />}>
           <Route element={<PublicLayout />}>
             <Route path={ROUTES.auth} element={<Auth />} />
