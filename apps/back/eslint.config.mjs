@@ -38,4 +38,10 @@ export default tseslint.config(
       '@darraghor/nestjs-typed/api-method-should-specify-api-response': 'off',
     },
   },
+  {
+    files: ['**/*.*'],
+    rules: {
+      '@darraghor/nestjs-typed/injectable-should-be-provided': 'off',
+    },
+  },
 );

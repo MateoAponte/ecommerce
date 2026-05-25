@@ -4,8 +4,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Rol } from './enums/Rol';
-import { Activity } from './enums';
 import { Exclude } from 'class-transformer';
 
 @Entity()
@@ -34,21 +32,6 @@ export class User {
     length: 255,
   })
   password: string;
-
-  @Column({
-    type: 'enum',
-    enum: Object.values(Rol),
-    default: Rol.USER,
-  })
-  rol: Rol;
-
-  @Column({
-    type: 'enum',
-    enum: Object.values(Activity),
-    array: true,
-    default: [Activity.READER],
-  })
-  activities: Activity[];
 
   @Exclude()
   @Column({

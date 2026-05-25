@@ -14,8 +14,7 @@ import { UserService } from './provider/user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { DeleteResult, UpdateResult } from 'typeorm';
-import { Rol, Activity } from './enums';
-import { ActivitiesGuard, JwtAuthGuard, RolesGuard } from 'src/auth/guards';
+import { JwtAuthGuard } from 'src/auth/guards';
 import {
   CreateUserDocumentation,
   DeleteUserDocumentation,
@@ -25,17 +24,14 @@ import {
 } from './decorators/userDocumentation.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
-import { AccessValidator } from './decorators/accessValidator.decorator';
 
 @ApiBearerAuth()
 @ApiTags('users')
-@UseGuards(JwtAuthGuard, RolesGuard, ActivitiesGuard)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @CreateUserDocumentation()
-  @AccessValidator()
   @HttpCode(HttpStatus.CREATED)
   @Post()
   create(@Body() createUserDto: CreateUserDto): Promise<UserResponseDto> {
@@ -43,29 +39,21 @@ export class UserController {
   }
 
   @GetAllUsersDocumentation()
-  @AccessValidator({
-    roles: [Rol.USER],
-    activities: [Activity.READER],
-  })
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll(): Promise<UserResponseDto[]> {
     return this.userService.findAll();
   }
 
   @GetUserDocumentation()
-  @AccessValidator({
-    roles: [Rol.USER],
-    activities: [Activity.READER],
-  })
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string): Promise<UserResponseDto> {
     return this.userService.findOne(id);
   }
 
   @UpdateUserDocumentation()
-  @AccessValidator({
-    activities: [Activity.EDITOR, Activity.WRITER],
-  })
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   update(
@@ -76,9 +64,7 @@ export class UserController {
   }
 
   @DeleteUserDocumentation()
-  @AccessValidator({
-    activities: [Activity.EDITOR, Activity.WRITER],
-  })
+  @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 400, description: 'Bad Request.' })
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)

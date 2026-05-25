@@ -32,7 +32,7 @@ docker-compose down -v
 
 ### 1. **Database (PostgreSQL)**
 
-- **Container**: `template-db`
+- **Container**: `gapsi-ecommerce-db`
 - **Port**: `5432`
 - **Access**:
   - From backend: `db:5432` (Docker network)
@@ -40,11 +40,11 @@ docker-compose down -v
 - **Default Credentials**:
   - User: `postgres`
   - Password: `postgres`
-  - Database: `template_db`
+  - Database: `gapsi-ecommerce-db`
 
 ### 2. **Backend (NestJS API)**
 
-- **Container**: `template-back`
+- **Container**: `gapsi-ecommerce-back`
 - **Port**: `3000` (exposed to host)
 - **URL**: `http://localhost:3000`
 - **Features**:
@@ -54,7 +54,7 @@ docker-compose down -v
 
 ### 3. **Frontend (Nginx)**
 
-- **Container**: `template-front`
+- **Container**: `gapsi-ecommerce-front`
 - **Port**: `80` (exposed to host)
 - **URL**: `http://localhost`
 - **Features**:
@@ -105,7 +105,7 @@ docker-compose logs -f front
 docker-compose exec back npm run build
 
 # Database (PostgreSQL CLI)
-docker-compose exec db psql -U postgres -d template_db
+docker-compose exec db psql -U postgres -d gapsi-ecommerce-db
 ```
 
 ### Rebuild a single service:

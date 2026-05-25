@@ -2,9 +2,9 @@ import { StrictMode, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { setupInterceptors } from './common/infra/http/interceptor.ts';
 import { AppRouter } from './router/router.tsx';
+import { Toaster } from 'react-hot-toast';
 
-import './common/styles/index.scss';
-import './common/styles/vendors/tailwind.css';
+import './index.css';
 import { useAppStore } from './common/store/store.ts';
 
 setupInterceptors();
@@ -22,5 +22,6 @@ function App() {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
+    <Toaster position="top-center" reverseOrder={false} />
   </StrictMode>,
 );

@@ -4,19 +4,20 @@ services:
   # PostgreSQL Database
   db:
     image: postgres:16
-    container_name: template-db
+    container_name: gapsi-ecommerce-db
     env_file:
       - .env
     environment:
       POSTGRES_USER: ${DB_USER:-postgres}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
-      POSTGRES_DB: ${DB_NAME:-template_db}
+      POSTGRES_DB: ${DB_NAME:-gapsi-ecommerce-db}
     ports:
       - '${DB_PORT:-5433}:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - template-network
+
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U ${DB_USER:-postgres}']
       interval: 10s
@@ -30,7 +31,7 @@ services:
     build:
       context: .
       dockerfile: apps/back/Dockerfile
-    container_name: template-back
+    container_name: gapsi-ecommerce-back
     environment:
       NODE_ENV: ${NODE_ENV:-dev}
       PORT: 3000
@@ -38,7 +39,7 @@ services:
       DB_PORT: 5432
       DB_USER: ${DB_USER:-postgres}
       DB_PASSWORD: ${DB_PASSWORD:-postgres}
-      DB_NAME: ${DB_NAME:-template_db}
+      DB_NAME: ${DB_NAME:-gapsi-ecommerce-db}
       JWT_SECRET: ${JWT_SECRET:-your-secret-key-change-in-production}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
     ports:
@@ -55,7 +56,7 @@ services:
     build:
       context: .
       dockerfile: apps/front/Dockerfile
-    container_name: template-front
+    container_name: gapsi-ecommerce-front
     ports:
       - '8080:8080'
     depends_on:

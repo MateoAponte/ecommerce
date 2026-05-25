@@ -9,6 +9,7 @@ import { DeleteResult, UpdateResult } from 'typeorm';
 import { AuthService } from 'src/auth/auth.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UserResponseDto } from '../dto/user-response.dto';
+import { EncoderService } from 'src/common/services/encoder.service';
 
 @Injectable()
 export class UserService {
@@ -27,9 +28,9 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<UserResponseDto> {
-    const hashPass = await this.authService.hashPassword(
-      createUserDto.password,
-    );
+    const rPass = new EncoderService().decode(createUserDto.password);
+
+    const hashPass = await this.authService.hashPassword(rPass);
 
     const existingUser = await this.userRepository.findUserByEmail(
       createUserDto.email,

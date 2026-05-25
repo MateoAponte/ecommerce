@@ -22,8 +22,6 @@ export class JwtProvider {
     const jwtPayload = {
       id: token.id,
       email: token.email,
-      rol: token.rol,
-      activities: token.activities,
       name: token.name,
     };
 

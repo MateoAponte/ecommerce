@@ -2,6 +2,7 @@ import { apiClient } from '../../common/infra/http/client';
 import type { IResponse } from '../../common/infra/http/interfaces/IResponse';
 import type { ISessionPayload } from '../store/interfaces';
 import type { ILoginRequest } from './interfaces/ILoginRequest';
+import type { IRegisterRequest } from './interfaces/IRegisterRequest';
 
 export const authService = {
   async login(payload: ILoginRequest): Promise<ISessionPayload> {
@@ -9,6 +10,11 @@ export const authService = {
       '/auth/login',
       payload,
     );
+    return data.data;
+  },
+
+  async register(payload: IRegisterRequest): Promise<ISessionPayload> {
+    const { data } = await apiClient.post<IResponse<ISessionPayload>>('/user', payload);
     return data.data;
   },
 

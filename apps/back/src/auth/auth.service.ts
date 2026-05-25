@@ -1,10 +1,10 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { UserRepositoryService } from 'src/user/provider/user.repository.service';
+import { UserRepositoryService } from '../user/provider/user.repository.service';
 import { LoginDto, TokenDto, TokenUserDto } from './dtos';
 import { AesProvider, JwtProvider } from './providers';
 import { AES_KEY } from './constants';
-import { EncoderService } from 'src/common/services/Encoder.service';
+import { EncoderService } from '../common/services/encoder.service';
 
 @Injectable()
 export class AuthService {

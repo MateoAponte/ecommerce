@@ -1,9 +1,6 @@
 export const ROUTES = {
-  home: '/',
-  login: '/login',
-  dashboard: '/dashboard',
-  profile: '/profile',
-  users: '/users',
-  unauthorized: '/unauthorized',
+  ecommerce: '/ecommerce',
+  auth: '/auth',
+  orderProcessing: '/order-processing',
   notFound: '*',
 } as const;

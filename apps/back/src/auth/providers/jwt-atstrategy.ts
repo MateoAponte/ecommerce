@@ -6,7 +6,7 @@ import { AesProvider } from './aes-provider';
 import { TokenUserDto } from '../dtos';
 import { AES_KEY, AT_SECRET } from '../constants';
 
-@Injectable() // Yo le dire que hacer con al Access Token
+@Injectable()
 export class JwtAtStrategy extends PassportStrategy(Strategy, 'token') {
   constructor(
     /**
@@ -25,8 +25,6 @@ export class JwtAtStrategy extends PassportStrategy(Strategy, 'token') {
     return {
       id: payload.id,
       email: payload.email,
-      rol: payload.rol,
-      activities: payload.activities,
     };
   }
 }

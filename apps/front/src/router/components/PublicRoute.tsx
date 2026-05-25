@@ -6,7 +6,7 @@ export const PublicRoute = () => {
   const isAuthenticated = useAppStore((state) => state.isAuthenticated);
 
   if (isAuthenticated) {
-    return <Navigate to={ROUTES.dashboard} replace />;
+    return <Navigate to={ROUTES.ecommerce} replace />;
   }
 
   return <Outlet />;

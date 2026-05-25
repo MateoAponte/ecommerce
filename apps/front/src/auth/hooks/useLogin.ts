@@ -33,10 +33,10 @@ export const useLogin = () => {
         user: response.user,
       });
 
-      navigate(ROUTES.dashboard, { replace: true });
+      navigate(ROUTES.ecommerce, { replace: true });
     } catch (error: any) {
       const { message } = error.response.data;
-      const capitalizedMessage = message[0].charAt(0).toUpperCase() + message[0].slice(1);
+      const capitalizedMessage = message.charAt(0).toUpperCase() + message.slice(1);
 
       setSubmitError(
         error instanceof Error ? capitalizedMessage : 'Unable to sign in right now.',

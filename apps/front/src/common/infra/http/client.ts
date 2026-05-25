@@ -9,3 +9,13 @@ export const apiClient = axios.create({
   },
   withCredentials: true,
 });
+
+export const apiClientWalmart = axios.create({
+  baseURL: env.walmartApiUrl,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+    'x-rapidapi-key': env.walmartApiKey,
+    'x-rapidapi-host': 'axesso-walmart-data-service.p.rapidapi.com',
+  },
+});

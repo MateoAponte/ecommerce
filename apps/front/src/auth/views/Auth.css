@@ -1,0 +1,43 @@
+.auth-container {
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+}
+
+.auth-panel {
+  position: absolute;
+  width: 100%;
+  transition:
+    transform 0.9s ease,
+    opacity 1s ease,
+    scale 0.5s ease,
+    filter 0.5s ease;
+}
+
+/* Visible */
+.auth-panel.active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+/* Login sube */
+.auth-panel.inactive-up {
+  transform: translateY(-400px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  scale: 0.98;
+  filter: blur(4px);
+}
+
+/* Register baja */
+.auth-panel.inactive-down {
+  transform: translateY(400px);
+  scale: 0.98;
+  filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}

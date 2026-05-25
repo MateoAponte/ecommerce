@@ -6,7 +6,7 @@ export const ProtectedRoute = () => {
   const isAuthenticated = useAppStore((state) => state.isAuthenticated);
 
   if (!isAuthenticated) {
-    return <Navigate to={ROUTES.login} replace />;
+    return <Navigate to={ROUTES.auth} replace />;
   }
 
   return <Outlet />;
