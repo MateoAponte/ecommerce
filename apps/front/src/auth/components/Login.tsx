@@ -4,8 +4,10 @@ import { useForm } from 'react-hook-form';
 import { loginSchema, type LoginFormValues } from '../schemas/login.schema';
 import { useLogin } from '../hooks/useLogin';
 import { Spinner } from '../../common/ui/Spinner/Spinner';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import { TextFieldStyle } from '../../common/constants/TextFieldStyle';
+import { ROUTES } from '../../router/routePaths';
+import { Link } from 'react-router';
 
 export const Login = () => {
   const { login, isSubmitting, submitError } = useLogin();
@@ -78,14 +80,21 @@ export const Login = () => {
         )}
       </div>
 
-      <Button
-        disabled={isSubmitting || !isValid}
-        variant="outlined"
-        fullWidth
-        type="submit"
-      >
-        {isSubmitting ? <Spinner size="md" /> : <span>Sign in</span>}
-      </Button>
+      <div>
+        <Button
+          disabled={isSubmitting || !isValid}
+          variant="outlined"
+          fullWidth
+          type="submit"
+        >
+          {isSubmitting ? <Spinner size="md" /> : <span>Sign in</span>}
+        </Button>
+        <Typography
+          sx={{ mt: 2, color: 'var(--accent)', textAlign: 'center', fontSize: 12 }}
+        >
+          Or continue to <Link to={ROUTES.ecommerce}>E-commerce</Link>
+        </Typography>
+      </div>
     </form>
   );
 };

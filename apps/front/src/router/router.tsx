@@ -37,26 +37,31 @@ export const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* /auth — solo accesible si NO estás autenticado */}
         <Route element={<PublicRoute />}>
           <Route element={<PublicLayout />}>
-            <Route path={ROUTES.auth} element={<Auth />}></Route>
-          </Route>
-          <Route element={<EcommerceLayout />}>
-            <Route path={ROUTES.ecommerce} element={<Shopping />}></Route>
+            <Route path={ROUTES.auth} element={<Auth />} />
           </Route>
         </Route>
+
+        {/* /ecommerce — siempre accesible, con su propio layout */}
+        <Route element={<EcommerceLayout />}>
+          <Route path={ROUTES.ecommerce} element={<Shopping />} />
+        </Route>
+
+        {/* /order-processing — solo si autenticado */}
         <Route element={<ProtectedRoute />}>
           <Route element={<PrivateLayout />}>
             {privateRoutes.map((route) => {
               const hasAccessRules =
                 (route.roles?.length ?? 0) > 0 || (route.permissions?.length ?? 0) > 0;
-              if (hasAccessRules) {
-                return <></>;
-              }
+              if (hasAccessRules) return null;
               return <Route key={route.path} path={route.path} element={route.element} />;
             })}
           </Route>
         </Route>
+
+        {/* 404 */}
         {systemRoutes.map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />
         ))}

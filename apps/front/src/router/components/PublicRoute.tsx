@@ -6,10 +6,6 @@ export const PublicRoute = () => {
   const isAuthenticated = useAppStore((state) => state.isAuthenticated);
   const { pathname } = useLocation();
 
-  // path: /ecommerce
-  if (isAuthenticated && !pathname.includes('/ecommerce')) {
-    return <Navigate to={ROUTES.ecommerce} replace />;
-  }
-
-  return <Outlet />;
+  if (pathname === '/ecommerce') return <Navigate to={ROUTES.ecommerce} replace />;
+  return isAuthenticated ? <Navigate to={ROUTES.ecommerce} replace /> : <Outlet />;
 };

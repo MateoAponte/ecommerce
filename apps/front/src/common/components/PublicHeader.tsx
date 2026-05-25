@@ -14,11 +14,15 @@ export const PublicHeader = () => {
   };
 
   const navigate = useNavigate();
-  const clearSession = useAppStore((state) => state.clearSession);
+  const { clearSession, reset, isAuthenticated } = useAppStore((state) => state);
 
   const handleLogout = () => {
     clearSession();
+    reset();
     navigate(ROUTES.auth, { replace: true });
+  };
+  const resetSession = () => {
+    reset();
   };
 
   return (
@@ -49,10 +53,29 @@ export const PublicHeader = () => {
         <div className="d-flex align-items-center gap-3">
           <CartButton onClose={handleClose} count={items.length} />
 
-          <Tooltip title="Logout">
+          {isAuthenticated ? (
+            <Tooltip title="Logout">
+              <IconButton
+                className="bg-white shadow-sm"
+                onClick={handleLogout}
+                sx={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: '10px',
+                  color: 'var(--accent)',
+                  transition: 'all .16s',
+                }}
+              >
+                <i
+                  className="fa-solid fa-right-from-bracket"
+                  style={{ fontSize: 15 }}
+                ></i>
+              </IconButton>
+            </Tooltip>
+          ) : (
             <IconButton
               className="bg-white shadow-sm"
-              onClick={handleLogout}
+              onClick={resetSession}
               sx={{
                 width: 38,
                 height: 38,
@@ -61,9 +84,9 @@ export const PublicHeader = () => {
                 transition: 'all .16s',
               }}
             >
-              <i className="fa-solid fa-right-from-bracket" style={{ fontSize: 15 }}></i>
+              <i className="fa-solid fa-trash-can" style={{ fontSize: 15 }}></i>
             </IconButton>
-          </Tooltip>
+          )}
         </div>
       </nav>
     </Paper>
