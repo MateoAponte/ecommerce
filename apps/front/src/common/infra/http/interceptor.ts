@@ -87,8 +87,6 @@ const onResponseError = async (error: AxiosError) => {
 
       const { logout } = useAppStore.getState();
       logout();
-
-      // window.location.href = '/login';
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;

@@ -18,7 +18,7 @@ export const CartPopover = ({
   items,
   removeItem,
 }: Props) => {
-  // const total = items.reduce((acc: IProduct, p) => acc + Number(p.price), 0);
+  const total = items.reduce((acc: any, p: any) => acc + p.priceValue, 0).toFixed(2);
 
   return (
     <Popover
@@ -27,6 +27,11 @@ export const CartPopover = ({
       onClose={onClose}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      sx={{
+        '& .MuiPaper-elevation': {
+          maxWidth: 400,
+        },
+      }}
     >
       {/* Header */}
       <Box
@@ -75,6 +80,7 @@ export const CartPopover = ({
           padding: '12px',
           display: 'flex',
           flexDirection: 'column',
+          maxHeight: '40vh',
           gap: '8px',
           '&::-webkit-scrollbar': { width: 4 },
           '&::-webkit-scrollbar-thumb': { background: '#e2e8f0', borderRadius: 4 },
@@ -83,7 +89,8 @@ export const CartPopover = ({
         {items.length === 0 ? (
           <Box sx={{ textAlign: 'center', py: 4, color: '#a0a0a0' }}>
             <i className="fa-solid fa-bag-shopping" style={{ fontSize: 28 }}></i>
-            <span style={{ fontSize: 13, marginTop: 1 }}>Tu carrito está vacío</span>
+            <br />
+            <span style={{ fontSize: 13, marginTop: 1 }}>Your cart is empty</span>
           </Box>
         ) : (
           items.map((product: IProduct) => (
@@ -91,6 +98,7 @@ export const CartPopover = ({
               key={product.id}
               product={product}
               onRemoveToCart={() => removeItem(product)}
+              full
             >
               {({ product, onRemoveToCart }) => (
                 <ProductCartPreview
@@ -111,7 +119,7 @@ export const CartPopover = ({
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '12px' }}>
             <span style={{ fontSize: 13, color: 'var(--code-bg)' }}>Total</span>
             <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--accent)' }}>
-              50000
+              ${total} USD
             </span>
           </Box>
           <Button
@@ -133,7 +141,7 @@ export const CartPopover = ({
             }}
           >
             <i className="fa-solid fa-lock" style={{ marginRight: 8, fontSize: 12 }}></i>
-            Confirm Shopping Cart
+            Proceed to checkout
           </Button>
         </Box>
       )}

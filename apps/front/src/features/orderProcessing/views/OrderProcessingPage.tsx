@@ -8,7 +8,7 @@ export const OrderProcessingPage = () => {
   const { reset } = useAppStore((state) => state);
 
   useEffect(() => {
-    reset(); // vacía el carrito al confirmar
+    reset();
   }, []);
 
   return (
@@ -54,16 +54,16 @@ export const OrderProcessingPage = () => {
 
       <Box sx={{ textAlign: 'center', maxWidth: 360 }}>
         <Typography sx={{ fontSize: 22, fontWeight: 700, color: '#0e0e0e' }}>
-          ¡Compra en proceso!
+          Buy in progress!
         </Typography>
         <Typography sx={{ fontSize: 14, color: '#777', mt: '8px', lineHeight: 1.6 }}>
-          Tu pedido está siendo procesado. Te notificaremos cuando esté confirmado.
+          Your order is being processed. You will be notified when it is confirmed.
         </Typography>
       </Box>
 
       {/* Steps */}
       <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center', mt: '8px' }}>
-        {['Pedido recibido', 'En proceso', 'Confirmado'].map((step, i) => (
+        {['Order received', 'In process', 'Confirmed'].map((step, i) => (
           <Box key={step} sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Box
               sx={{

@@ -9,7 +9,7 @@ export const useLogout = () => {
       await authService.logout();
     } finally {
       clearSession();
-      window.location.href = '/login';
+      window.location.href = '/auth';
     }
   };
 

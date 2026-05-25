@@ -40,10 +40,10 @@ export const SearchEmptyState = ({ onSelect, activeKw }: Props) => {
     >
       <Box sx={{ textAlign: 'center' }}>
         <Typography sx={{ fontSize: 22, fontWeight: 600, color: '#0e0e0e' }}>
-          ¿Qué quieres buscar hoy?
+          What do you want to search today?
         </Typography>
         <Typography sx={{ fontSize: 14, color: '#a0a0a0', mt: '4px' }}>
-          Selecciona una categoría o escribe en el buscador
+          Select a category or type in the search bar
         </Typography>
       </Box>
 

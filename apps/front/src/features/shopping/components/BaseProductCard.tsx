@@ -7,6 +7,7 @@ export const BaseProductCard = ({
   sx = {},
   children,
   onDetail,
+  full = false,
   onRemoveToCart,
 }: {
   product: IProduct | null;
@@ -18,6 +19,7 @@ export const BaseProductCard = ({
     onRemoveToCart?: () => void;
   }) => React.ReactNode;
   onDetail?: () => void;
+  full?: boolean;
   onRemoveToCart?: () => void;
 }) => {
   return (
@@ -38,7 +40,7 @@ export const BaseProductCard = ({
         '&:active': { cursor: 'grabbing' },
         ...sx,
       }}
-      className="col-6 col-lg-3"
+      className={full ? 'col-12' : 'col-6 col-lg-3'}
       onClick={() => onDetail && onDetail()}
     >
       {children({ product, onAddToCart, onRemoveToCart })}

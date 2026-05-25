@@ -29,7 +29,7 @@ export const CartButton = ({ count = 0, onClose }: CartButtonProps) => {
     if (isAuthenticated) {
       navigate('/order-processing');
     } else {
-      navigate('/login');
+      navigate('/auth');
     }
   };
 

@@ -39,6 +39,12 @@ export class ProductAdapter extends IProductAdapter {
   getCount(products: any): number {
     return products.item.props.pageProps.initialData.searchResult.aggregatedCount;
   }
+  getPriceValue(product: any): number {
+    return Number(
+      String(product.priceInfo.linePriceDisplay).replace(/([A-Za-z]*\s|\$)/g, '') ||
+        10.99,
+    );
+  }
 
   normalizeProduct(products: any): IProduceResponse {
     const filteredProducts: any[] =

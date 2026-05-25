@@ -10,6 +10,7 @@ import { Auth } from '../auth/views/Auth';
 import { Shopping } from '../features/shopping/views/Shopping';
 import { PublicLayout } from '../layout/PublicLayout';
 import { OrderProcessingPage } from '../features/orderProcessing/views/OrderProcessingPage';
+import { EcommerceLayout } from '../layout/ECommerceLayout';
 
 export type AppLayout = 'public' | 'private' | 'system';
 
@@ -24,13 +25,12 @@ export interface AppRouteConfig {
 
 export const appRoutes: AppRouteConfig[] = [
   { path: ROUTES.auth, element: <Auth />, layout: 'public' },
-  { path: ROUTES.ecommerce, element: <Shopping />, layout: 'private' },
+  { path: ROUTES.ecommerce, element: <Shopping />, layout: 'public' },
   { path: ROUTES.orderProcessing, element: <OrderProcessingPage />, layout: 'private' },
   { path: '*', element: <NotFoundPage />, layout: 'system' },
 ];
 
 export const AppRouter = () => {
-  const publicRoutes = appRoutes.filter((route) => route.layout === 'public');
   const privateRoutes = appRoutes.filter((route) => route.layout === 'private');
   const systemRoutes = appRoutes.filter((route) => route.layout === 'system');
 
@@ -39,9 +39,10 @@ export const AppRouter = () => {
       <Routes>
         <Route element={<PublicRoute />}>
           <Route element={<PublicLayout />}>
-            {publicRoutes.map((route) => (
-              <Route key={route.path} path={route.path} element={route.element} />
-            ))}
+            <Route path={ROUTES.auth} element={<Auth />}></Route>
+          </Route>
+          <Route element={<EcommerceLayout />}>
+            <Route path={ROUTES.ecommerce} element={<Shopping />}></Route>
           </Route>
         </Route>
         <Route element={<ProtectedRoute />}>
@@ -50,21 +51,7 @@ export const AppRouter = () => {
               const hasAccessRules =
                 (route.roles?.length ?? 0) > 0 || (route.permissions?.length ?? 0) > 0;
               if (hasAccessRules) {
-                return (
-                  // <Route
-                  //   key={route.path}
-                  //   element={
-                  //     <AuthorizedRoute
-                  //       roles={route.roles}
-                  //       permissions={route.permissions}
-                  //     />
-                  //   }
-                  // >
-                  //   {' '}
-                  //   <Route path={route.path} element={route.element} />{' '}
-                  // </Route>
-                  <></>
-                );
+                return <></>;
               }
               return <Route key={route.path} path={route.path} element={route.element} />;
             })}

@@ -253,7 +253,7 @@ export const ProductDetailModal = ({ product, open, onClose }: Props) => {
                   },
                   '&.Mui-disabled': {
                     borderColor: inCart ? '#047857' : '#e2e8f0',
-                    color: inCart ? '#fff' : '#a0a0a0',
+                    color: inCart ? '#047857' : '#a0a0a0',
                   },
                 }}
               >

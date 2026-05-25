@@ -126,7 +126,7 @@ export const ProductCartPreview = ({ product, onRemove }: Props) => {
               letterSpacing: '-.01em',
             }}
           >
-            ${Number(product.price).toFixed(2)}
+            ${product.priceValue}
           </Typography>
           <Box
             sx={{

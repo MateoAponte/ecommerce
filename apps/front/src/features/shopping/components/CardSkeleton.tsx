@@ -2,7 +2,7 @@ import { Card, CardActions, CardContent, Skeleton } from '@mui/material';
 
 export const CardSkeleton = () => {
   return (
-    <Card elevation={0} sx={{ border: `1px solid var(--border)`, borderRadius: '12px' }}>
+    <Card elevation={0} sx={{ border: `0px solid var(--border)`, borderRadius: '12px' }}>
       <Skeleton
         variant="rectangular"
         height={200}

@@ -28,6 +28,10 @@ export const ProductCard = ({
   return (
     <>
       <Box
+        ref={setNodeRef}
+        {...listeners}
+        {...attributes}
+        onClick={(e) => e.stopPropagation()}
         sx={{
           position: 'relative',
           height: 172,
@@ -90,22 +94,21 @@ export const ProductCard = ({
 
         {/* Drag handle — top right */}
         <Box
-          ref={setNodeRef}
-          {...listeners}
-          {...attributes}
-          onClick={(e) => e.stopPropagation()}
           sx={{
             position: 'absolute',
             top: 10,
             right: 10,
+            width: 35,
+            height: 35,
             background: '#fff',
             border: '1px dashed #005db9',
             color: '#005db9',
-            borderRadius: '20px',
+            borderRadius: '6px',
             padding: '3px 8px',
             cursor: 'grab',
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'center',
             gap: '4px',
             fontSize: '11px',
             '&:active': { cursor: 'grabbing' },

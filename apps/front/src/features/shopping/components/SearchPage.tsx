@@ -20,7 +20,7 @@ export const SearchPage = ({
   onLoadMore,
   onSelectProduct,
 }: SearchPageProps) => {
-  const { items, addItem } = useAppStore((state) => state);
+  const { items } = useAppStore((state) => state);
 
   const { sentinelRef } = useInfiniteScroll({
     onLoadMore,
@@ -56,7 +56,7 @@ export const SearchPage = ({
                 <BaseProductCard
                   key={i}
                   product={product}
-                  onAddToCart={() => addItem(product)}
+                  onAddToCart={() => onSelectProduct(product)}
                   onDetail={() => onSelectProduct(product)}
                 >
                   {({ product, onAddToCart }) => (
@@ -69,6 +69,22 @@ export const SearchPage = ({
 
           {/* Sentinel — dispara loadMore al llegar aquí */}
           <div ref={sentinelRef} style={{ height: 32 }} />
+          {hasNextPage && (
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '8px',
+                py: 3,
+              }}
+            >
+              <CircularProgress size={20} sx={{ color: '#005db9' }} />
+              <Typography sx={{ fontSize: 12, color: '#a0a0a0' }}>
+                Loading more products...
+              </Typography>
+            </Box>
+          )}
 
           {/* Spinner páginas siguientes */}
           {isLoading && (

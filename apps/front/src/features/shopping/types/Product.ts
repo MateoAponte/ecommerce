@@ -15,6 +15,7 @@ export interface IProduct {
   brand: string;
   catalogProductType: string;
   department: string;
+  priceValue: number;
   rating: IRating;
   thumbnail: string;
 }
