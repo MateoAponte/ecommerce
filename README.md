@@ -431,5 +431,5 @@ API errors surface differently depending on where they occur — some show a toa
 
 - Product search requires a valid RapidAPI key (`VITE_WALMART_API_KEY`). Without it, search returns no results.
 - The production `dist` cannot be opened directly via `file://` — a local server is required (see Option 3 above).
-- GraphQL is partially scaffolded but not fully integrated in this version.
+- GraphQL is partially scaffolded but not fully integrated in this version. After evaluating the architecture, I decided not to add an additional GraphQL abstraction layer because the Walmart API already exposes REST endpoints with denormalized payloads. In this case, data transformation and normalization are handled cleanly through the Adapter pattern in the NestJS backend, making a full GraphQL integration unnecessary for the current scope.
 - PWA support is limited to service worker registration and a `manifest.json`; offline mode covers static assets only.
