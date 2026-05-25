@@ -25,7 +25,6 @@ export const useProductSearch = () => {
         criteria: kw,
         page: 1,
       });
-      console.log(data);
 
       setProducts(data.products);
       setTotalPages(data.total);

@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "start:prod": "cross-env NODE_ENV=prod node dist/main",
     "start:dev": "cross-env NODE_ENV=dev vite",
+    "serve": "serve dist",
     "test": "jest"
   },
   "dependencies": {
@@ -46,6 +47,7 @@
     "postcss-import": "^16.1.1",
     "prettier": "^3.8.1",
     "sass": "^1.98.0",
+    "serve": "^14.2.6",
     "tailwindcss": "^4.2.2",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.56.1",
