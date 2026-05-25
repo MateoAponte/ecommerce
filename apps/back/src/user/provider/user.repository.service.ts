@@ -1,3 +1,9 @@
+/**
+ * Pattern: Repository
+ * Benefit: Encapsulates data access behind a repository abstraction so
+ * services can depend on a stable API and the persistence implementation
+ * (TypeORM / PostgreSQL) can change without impacting business logic.
+ */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user.entity';

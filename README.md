@@ -60,6 +60,30 @@ VITE_APP_NAME=GAPSI E-Commerce
 VITE_ENV=dev
 ```
 
+If you plan to run the project with Docker Compose, create a `.env` file
+in the project root with the following Docker-ready configuration:
+
+```env
+# Environment variables for Docker Compose
+# Backend Configuration
+NODE_ENV=dev
+PORT=3000
+VITE_WALMART_API_URL=https://axesso-walmart-data-service.p.rapidapi.com/wlm/walmart-search-by-keyword
+VITE_WALMART_API_KEY=add-your-walmart-api-key-here
+
+# Database Configuration
+DB_HOST=db
+DB_PORT=5433
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_NAME=gapsi-ecommerce-db
+
+
+# JWT Configuration
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+JWT_EXPIRES_IN=7d
+```
+
 ---
 
 ## 📘 Overview
@@ -67,248 +91,204 @@ VITE_ENV=dev
 This project is a template for an e-commerce web application. It includes:
 
 - Backend API in **NestJS**
-- Frontend SPA in **React + Vite**
-- JWT authentication with access and refresh tokens
-- Drag-and-drop shopping cart
-- Modular backend and feature-driven frontend architecture
-- Docker support for development and deployment
-
----
-
-## ⚙️ Config
-
-### Backend
-
-The backend is configured through environment variables and uses **@nestjs/config** for configuration management. It relies on:
-
-- `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`
-- `JWT_SECRET`, `JWT_EXPIRES_IN`
-- `PORT`
-
-### Frontend
-
-The frontend loads runtime values from Vite environment variables:
-
-- `VITE_API_URL`
-- `VITE_WALMART_API_URL`
-- `VITE_WALMART_API_KEY`
-- `VITE_APP_NAME`
-- `VITE_ENV`
-
----
-
-## ✨ Features
-
-- **Drag & Drop** cart interactions
-- **JWT authentication** with login, register, and refresh flows
-- **Protected routes** for authenticated pages
-- **Search with debounce**
-- **Infinite scroll** product listing
-- **Responsive UI** with Material UI and utility styling
-- **Toast notifications** for user feedback
-- **Public/private layout separation**
-
----
-
-## ▶️ How to Run App
-
-### With Docker (recommended)
-
-```bash
-pnpm run docker:up
-```
-
-Access:
-
-- Frontend: `http://localhost:8080`
-- Backend: `http://localhost:3000`
-
-Stop services:
-
-```bash
-pnpm run docker:down
-```
-
-### Without Docker
-
-#### Start PostgreSQL
-
-Use local PostgreSQL or launch the database with Docker separately:
-
-```bash
-docker run --name postgres-gapsi \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=postgres \
-  -e POSTGRES_DB=gapsi-ecommerce-db \
-  -p 5433:5432 \
-  -d postgres:16
-```
-
-#### Start backend
-
-```bash
-cd apps/back
-pnpm run start:dev
-```
-
-#### Start frontend
-
-```bash
-cd apps/front
-pnpm run start:dev
-```
-
-Frontend is available at `http://localhost:5173`.
-
----
-
-## ✅ Prerequisites
-
-- Node.js 22+
-- pnpm
-- Git
-- Docker + Docker Compose
-- PostgreSQL
-- pgAdmin 4 (recommended if not using Docker)
-
----
-
-## 📌 Areas to Improve
-
-- **Add unit and integration tests**: improve reliability by covering backend services and frontend components. Use Jest and Supertest for backend tests, and React Testing Library for frontend UI tests.
-- **Centralize token constants and shared classes**: reduce duplication and configuration drift by defining shared constants and interfaces in a common module.
-- **Introduce a 7-1 Sass architecture**: increase CSS maintainability with a clear folder structure for variables, base styles, components, layout, pages, and themes.
-- **Add endpoint caching**: improve performance for repeated requests by implementing NestJS caching or React Query stale data caching.
-- **Create consistent Material UI component patterns**: standardize design tokens and reusable component wrappers to reduce style drift.
-- **Centralize frontend error handling**: make error flows consistent by adding a shared error formatter and a global Axios response handler.
-- **Improve accessibility support**: add ARIA labels, keyboard navigation, and semantic HTML to make the app more accessible.
-- **Enhance authorization rules**: strengthen security by implementing role-based route guards and metadata-driven access control.
-
----
-
-## ⚠️ Errors
-
-- **Responsive layout issues**: some UI areas do not adapt consistently on mobile. Fix by auditing breakpoints and using responsive Material UI / Tailwind utilities.
-- **Visual state behavior is not centralized**: hover, focus, and active states vary across components. Fix by defining shared style tokens and component variants.
-- **Implementation inconsistencies**: similar logic is duplicated between modules. Fix by refactoring shared utilities and service abstractions.
-- **Error handling is inconsistent**: UI feedback does not always follow the same format. Fix by normalizing backend error responses and mapping them in a central frontend error handler.
-
----
-
-## 🧰 Techs
-
-- PostgreSQL
-- Docker
-- React
-- Vite
-- TypeScript
-- NestJS
-- JWT
-- Material UI
-- Zustand
-- Zod
-- React Router
-- Axios
-- react-hot-toast
-- @dnd-kit/core
-- Sass
-- Tailwind CSS
-
----
-
-## 🧠 SOLID
-
-- **Single Responsibility**: controllers, services, and providers each manage a separate concern.
-- **Open/Closed**: modules and state slices are structured to be extended without modifying existing code.
-- **Dependency Inversion**: NestJS injects providers and services through constructors.
-
----
+  The frontend loads runtime values from Vite environment variables:
 
 ## 🔧 Design Patterns
 
-The project uses these Refactoring Guru fundamental design patterns:
+En este repositorio se documentan y aplican patrones de diseño concretos. A continuación se listan los patrones principales, los archivos donde están implementados y el beneficio que aportan:
 
-### Adapter
+- **Adapter (Provider)**: `apps/back/src/auth/providers/aes-provider.ts`, `apps/back/src/auth/providers/jwt-provider.ts`, `apps/back/src/common/adapters/product.adapter.ts`
+- Beneficio: Encapsula la lógica de encriptación y JWT, y normaliza payloads de producto externos, permitiendo cambiar la implementación sin afectar `AuthService` ni la lógica de productos.
 
-- Used by authentication providers to adapt encryption and JWT behavior to a consistent token provider interface.
+- **Strategy**: `apps/back/src/auth/providers/jwt-atstrategy.ts`, `apps/back/src/auth/providers/jwt-rtstrategy.ts`
+  - Beneficio: Separa la validación de accesos y refresh tokens en estrategias intercambiables.
 
-### Strategy
+- **Repository**: `apps/back/src/user/provider/user.repository.service.ts`
+  - Beneficio: Abstracción del acceso a datos que facilita cambiar el ORM o la BD sin tocar la lógica de negocio.
 
-- Implemented by JWT auth strategies for access token and refresh token validation.
+- **Interceptor (Backend)**: `apps/back/src/common/interceptors/response.interceptor.ts`
+  - Beneficio: Normaliza las respuestas de la API (envoltura uniforme) reduciendo código repetido en controladores.
 
-### Decorator
+- **Filter (Exception Handling)**: `apps/back/src/common/filters/httpException.filter.ts`
+  - Beneficio: Centraliza el manejo de errores HTTP y genera respuestas consistentes.
 
-- Used by NestJS route decorators and custom decorators to attach metadata and documentation to auth endpoints.
+- **Provider (Frontend / Context)**: `apps/front/src/common/providers/DndProvider.tsx`
+  - Beneficio: Centraliza estado y efectos complejos (drag & drop) y los expone a componentes hijos.
 
-### Observer
+- **Slice (State Management)**: `apps/front/src/auth/store/auth.slice.ts`, `apps/front/src/features/shopping/store/shopping.slice.ts`
+  - Beneficio: Estado modular, testeable y fácil de componer.
 
-- Applied in drag-and-drop event handling, where event callbacks observe user interactions and update state.
+- **Custom Hooks**: `apps/front/src/auth/hooks/useLogin.ts`, `apps/front/src/features/shopping/hooks/useProductSearch.ts`
+  - Beneficio: Encapsulan efectos y lógica reutilizable, manteniendo componentes limpios.
 
----
+- **HTTP Interceptor (Frontend)**: `apps/front/src/common/infra/http/interceptor.ts`
+  - Beneficio: Centraliza la adición de tokens, manejo de reintentos y refresco automático de tokens.
 
-## Decisions Made
+- **Template Method**: `apps/front/src/features/shopping/components/BaseProductCard.tsx`
+  - Beneficio: Define la estructura (skeleton) común de una tarjeta de producto, dejando a los hijos (render props) implementar pasos concretos; mejora la consistencia y reutilización UI.
 
-### Why cart items are stored locally
+He añadido comentarios en los archivos relevantes indicando el patrón aplicado y el beneficio directo.
+async findUserById(id: string): Promise<User | null> {
+return this.repo.findOne({ where: { id } });
+}
+}
 
-- Cart interactions are faster and avoid extra backend requests.
-- Local cart state reduces server-side state complexity.
-- It improves responsiveness for drag-and-drop behavior.
+// Service usa repository
+@Injectable()
+export class UserService {
+constructor(private userRepository: UserRepositoryService) {}
 
-### Why a feature-driven frontend structure
-
-- The code is easier to scale and maintain.
-- Each feature is self-contained and easier to navigate.
-- It avoids mixing unrelated UI logic.
-
-### Why Dockerize
-
-- Docker ensures a reproducible development environment.
-- It simplifies setup for database and services.
-- It reduces "works on my machine" issues.
-
-### Why split public and private views
-
-- It creates clearer security boundaries.
-- It supports separate layouts for unauthenticated and authenticated pages.
-- It simplifies route protection.
-
-### Why create services for endpoints
-
-- It centralizes HTTP logic.
-- It keeps component code cleaner.
-- It makes token refresh and error handling reusable.
-
-### Exception handling
-
-- Backend uses global exception handling for consistent API error responses.
-- Frontend interceptors centralize auth failure handling and token refresh.
-- This makes error states easier to manage and user feedback more consistent.
-
----
-
-## 📍 Routes
-
-- `/auth` — Authentication screen
-- `/ecommerce` — E-commerce shopping experience
-- `/order-processing` — Order processing screen
-- `/another` — 404 / fallback route
-
-// useInfiniteScroll: Carga infinita
-export const useInfiniteScroll = (callback: () => void) => {
-const observerTarget = useRef<HTMLDivElement>(null)
-
-useEffect(() => {
-const observer = new IntersectionObserver(entries => {
-if (entries[0].isIntersecting) callback()
-})
-if (observerTarget.current) observer.observe(observerTarget.current)
-return () => observer.disconnect()
-}, [callback])
-
-return observerTarget
+async findOne(id: string): Promise<UserResponseDto> {
+const user = await this.userRepository.findUserById(id);
+if (!user) throw new NotFoundException();
+return UserResponseDto.fromEntity(user);
+}
 }
 
 ````
+
+**Beneficio:** Cambiar BD de PostgreSQL a MongoDB solo tocando `UserRepositoryService`
+
+### 2. **Adapter Pattern (Strategy)**
+
+**Dónde:** `apps/back/src/auth/providers/`
+
+```typescript
+// Adapter para encriptación
+@Injectable()
+export class AesProvider {
+  encrypt(secret: string, key: string): string { ... }
+  decrypt(secret: string, key: string): string { ... }
+}
+
+// Adapter para JWT
+@Injectable()
+export class JwtProvider {
+  signTokens(user: User): TokenDto { ... }
+  refreshTokens(refreshToken: string): any { ... }
+}
+
+// Service usa adapters intercambiables
+@Injectable()
+export class AuthService {
+  constructor(
+    private readonly jwtProvider: JwtProvider,
+    private readonly aesProvider: AesProvider,
+  ) {}
+}
+````
+
+**Beneficio:** Cambiar algoritmo de encriptación sin tocar `AuthService`
+
+### 3. **Provider Pattern (Compound Component)**
+
+**Dónde:** `apps/front/src/common/providers/DndProvider.tsx`
+
+Envuelve lógica compleja y la expone a componentes hijos:
+
+```typescript
+// Provider centraliza DnD
+export const DndProvider = ({ children }) => {
+  const { handleDragStart, handleDragEnd, dragging } = useCartDraggable()
+
+  return (
+    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+      {children}
+      <DragOverlay>{dragging && <GhostCard />}</DragOverlay>
+    </DndContext>
+  )
+}
+
+// CartButton usa el contexto automáticamente
+export const CartButton = () => {
+  const { setNodeRef, isOver } = useDroppable({ id: 'cart-drop-zone' })
+  // Funciona porque está dentro de DndProvider
+}
+```
+
+**Beneficio:** Centralizar state y efectos complejos
+
+### 4. **Slice Pattern (State Management)**
+
+**Dónde:** `apps/front/src/*/store/*.slice.ts`
+
+Dividir estado en slices pequeños y componibles:
+
+```typescript
+// Auth slice
+export const createAuthSlice = (set) => ({
+  user: null,
+  accessToken: null,
+  setSession: (payload) => set({ user: payload.user, accessToken: payload.at_secret }),
+  logout: () => set({ user: null, accessToken: null }),
+});
+
+// Product slice
+export const createProductSlice = (set) => ({
+  items: [],
+  addItem: (item) => set((state) => ({ items: [...state.items, item] })),
+});
+
+// Composición en store principal
+const useAppStore = create<AppStore>((...a) => ({
+  ...createAuthSlice(...a),
+  ...createProductSlice(...a),
+}));
+```
+
+**Beneficio:** Estado organizado, fácil de testear cada slice
+
+### 5. **Custom Hooks Pattern**
+
+**Dónde:** `apps/front/src/**/hooks/*.ts`
+
+Encapsular lógica reutilizable en hooks:
+
+```typescript
+// useLogin: Lógica de autenticación
+export const useLogin = () => {
+  const navigate = useNavigate()
+  const setSession = useAppStore((state) => state.setSession)
+
+  const login = async (values: LoginFormValues) => {
+    const response = await authService.login(...)
+    setSession(response)
+    navigate(ROUTES.ecommerce)
+  }
+
+  return { login, isSubmitting, submitError }
+}
+
+// useCartDraggable: Lógica de drag & drop
+export const useCartDraggable = () => {
+  const [dragging, setDragging] = useState<IProduct>()
+  const { items, addItem } = useAppStore((state) => state)
+
+  const handleDragEnd = ({ over, active }: DragEndEvent) => {
+    if (over?.id !== 'cart-drop-zone') return
+    const product = active.data.current?.product as IProduct
+    if (!product || items.some(i => i.id === product.id)) return
+    addItem(product)
+  }
+
+  return { handleDragStart, handleDragEnd, dragging }
+}
+
+// useInfiniteScroll: Carga infinita
+export const useInfiniteScroll = (callback: () => void) => {
+  const observerTarget = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) callback()
+    })
+    if (observerTarget.current) observer.observe(observerTarget.current)
+    return () => observer.disconnect()
+  }, [callback])
+
+  return observerTarget
+}
+```
 
 **Beneficio:** Lógica reutilizable, testeable y desacoplada de componentes
 
@@ -352,7 +332,7 @@ export class ResponseInterceptor<T> implements NestInterceptor {
     );
   }
 }
-````
+```
 
 **Beneficio:** Lógica cross-cutting centralizada
 

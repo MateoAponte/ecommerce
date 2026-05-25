@@ -1,3 +1,8 @@
+/**
+ * Pattern: Slice (State management slice)
+ * Benefit: Encapsulates a focused piece of application state and
+ * its mutators, making the store modular, testable and easy to compose.
+ */
 import type { StateCreator } from 'zustand';
 import type { IAuthSlice, ISessionPayload } from './interfaces';
 import { sessionStorageService } from '../../common/infra/storage/session';

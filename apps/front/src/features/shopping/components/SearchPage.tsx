@@ -25,10 +25,9 @@ export const SearchPage = ({
   const { sentinelRef } = useInfiniteScroll({
     onLoadMore,
     hasNextPage,
-    isLoading, // solo bloquea durante la carga inicial
+    isLoading,
   });
 
-  // Requisito funcional peso 4: oculta productos ya en el carrito
   const visible = products.filter((p) => !items.some((i) => i.id === p.id));
 
   return (

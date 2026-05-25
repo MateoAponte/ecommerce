@@ -1,3 +1,10 @@
+/**
+ * Pattern: Template Method
+ * Benefit: Define the common structure of product card skeleton and
+ * allows children (render props) to implement the concrete steps
+ * (render content, buttons, variants). Improves visual consistency and
+ * reusability.
+ */
 import { Card } from '@mui/material';
 import type { IProduct } from '../types/Product';
 

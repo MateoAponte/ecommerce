@@ -1,3 +1,9 @@
+/**
+ * Pattern: Strategy
+ * Benefit: Implements a Passport strategy for access-token validation.
+ * Separates the authentication algorithm from controllers and allows
+ * plugging different strategies (access vs refresh) with minimal change.
+ */
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';

@@ -2,6 +2,12 @@ import type { Availability, IRating } from '../../types/Product';
 import { IProductAdapter } from './interfaces/IProductAdapter';
 import type { IProduceResponse } from './interfaces/IProductRequest';
 
+/**
+ * Pattern: Adapter (ProductAdapter)
+ * Benefit: Normalizes different product formats from external providers
+ * to a consistent interface, decoupling the rest of the application
+ * from changes in external providers.
+ */
 export class ProductAdapter extends IProductAdapter {
   getAvailableProducts(product: any): Availability {
     return product.availabilityStatusV2.value;
