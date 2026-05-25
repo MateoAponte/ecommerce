@@ -18,7 +18,7 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   if (!product || loading) return <CardSkeleton />;
 
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: product.id,
     data: { product }, // payload que recibe DndContext en dragEnd
   });
