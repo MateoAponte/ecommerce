@@ -92,10 +92,10 @@ export const CartPopover = ({
               product={product}
               onRemoveToCart={() => removeItem(product)}
             >
-              {({ product, onRemove }) => (
+              {({ product, onRemoveToCart }) => (
                 <ProductCartPreview
                   product={product}
-                  onRemove={() => onRemove && onRemove()}
+                  onRemove={() => onRemoveToCart && onRemoveToCart()}
                 />
               )}
             </BaseProductCard>
