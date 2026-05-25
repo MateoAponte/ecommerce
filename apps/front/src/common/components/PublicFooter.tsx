@@ -1,4 +1,4 @@
-import { Button, IconButton, Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 
 import GapsiLogoFooter from '../resources/LogoFooter.png';
 
