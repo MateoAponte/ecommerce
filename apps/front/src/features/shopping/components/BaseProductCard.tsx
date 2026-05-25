@@ -15,7 +15,7 @@ export const BaseProductCard = ({
   children: (props: {
     product: IProduct | null;
     onAddToCart?: () => void;
-    onRemove?: () => void;
+    onRemoveToCart?: () => void;
   }) => React.ReactNode;
   onDetail?: () => void;
   onRemoveToCart?: () => void;
